@@ -7,13 +7,13 @@
     },
     "version": "1.0.0",
     "swagger": "2.0.1",
-    "host": "https://facturas-app.herokuapp.com",
+    "host": "facturas-app.herokuapp.com",
     "basePath": "/api",
     "tags": [{
         "name": "Facturas",
         "description": "API para facturas"
     }],
-    "schemes": ["http"],
+    "schemes": ["https"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
