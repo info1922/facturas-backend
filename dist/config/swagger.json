@@ -1,0 +1,182 @@
+{
+    "title": "Facturas API Documentación",
+    "description": "Swagger API Documentación para Facturas CRUD",
+    "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0",
+    "swagger": "2.0.1",
+    "host": "https://facturas-app.herokuapp.com",
+    "basePath": "/api",
+    "tags": [{
+        "name": "Facturas",
+        "description": "API para facturas"
+    }],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/facturas": {
+            "post": {
+                "tags": ["Facturas"],
+                "summary": "Registra una nueva factura",
+                "description": "Crea una nueva factura",
+                "parameters": [{
+                    "name": "factura",
+                    "description": "Factura a registrar",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#definitions/Factura"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Nueva factura creada",
+                        "schema": {
+                            "$ref": "#definitions/Factura"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Facturas"],
+                "summary": "Obtiene todos las facturas registradas en la BD",
+                "description": "Obtiene todas las facturas",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema": {
+                            "$ref": "#definitions/Facturas"
+                        }
+                    }
+                }
+            }
+        },
+        "/facturas/{id}": {
+            "parameters": [{
+                "name": "id",
+                "in": "path",
+                "description": "Id de la factura",
+                "type": "string"
+            }],
+            "get": {
+                "tags": ["Facturas"],
+                "description": "Busca una factura por su id",
+                "summary": "Busca una factura",
+                "responses": {
+                    "200": {
+                        "description": "Factura encontrada",
+                        "schema": {
+                            "$ref": "#definitions/Factura"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Facturas"],
+                "description": "Elimina una factura por su id",
+                "summary": "Elimina una factura",
+                "responses": {
+                    "200": {
+                        "description": "Factura eliminada",
+                        "schema": {
+                            "$ref": "#definitions/Factura"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Facturas"],
+                "summary": "Actualiza una factura",
+                "description": "Actualiza una factura",
+                "parameters": [{
+                    "name": "factura",
+                    "description": "Factura a actualizar",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#definitions/UpdateFactura"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Factura actualizada",
+                        "schema": {
+                            "$ref": "#definitions/Factura"
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "definitions": {
+        "Factura": {
+            "required": ["item, qty, date, due"],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "item": {
+                    "type": "string"
+                },
+                "qty": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "due": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "rate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "tax": {
+                    "type": "number",
+                    "format": "float"
+                }
+            }
+        },
+        "UpdateFactura": {
+            "properties": {
+                "item": {
+                    "type": "string"
+                },
+                "qty": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "due": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "rate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "tax": {
+                    "type": "number",
+                    "format": "float"
+                }
+            }
+        },
+        "Facturas": {
+            "type": "array",
+            "$ref": "#definitions/Factura"
+        }
+    }
+}

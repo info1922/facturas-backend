@@ -57,7 +57,7 @@ export default {
                     factura
                 });
             })
-            .catch(err => { return res.status(500).json(err); });
+            .catch(err => { return res.status(400).json(err); });
     },
 
     // Busca una factura por su id
@@ -67,9 +67,9 @@ export default {
         Factura.findById(id)
             .then(factura => {
                 if (!factura) {
-                    return res.status(400).json({
+                    return res.status(404).json({
                         ok: false,
-                        mensaje: 'Erro al buscar la factura'
+                        mensaje: 'Este id no existe'
                     });
                 }
                 return res.status(200).json({

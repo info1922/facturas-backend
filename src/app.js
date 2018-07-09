@@ -2,10 +2,28 @@ import express from 'express';
 import mongoose from "mongoose";
 const colors = require('colors');
 var bodyParser = require('body-parser');
+
+require('./config/config');
+const app = express();
+
+
+// API - Docs
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './config/swagger.json';
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+    explorer: true
+}));
+
+// Body Parser configuración
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
 import { router } from './config/routes';
 
 // Config
-require('./config/config');
 
 mongoose.connection.openUri(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
     if (err) {
@@ -16,24 +34,12 @@ mongoose.connection.openUri(process.env.URLDB, { useNewUrlParser: true }, (err, 
 });
 
 
-const app = express();
-
-
-// Body Parser configuración
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
-app.use(bodyParser.json());
-
-
-const PORT = 3000;
-
 app.use('/api', router);
 
 app.get('/', (req, res) => {
     res.status(200).json({
         ok: true,
-        mensaje: 'Todo bien'
+        mensaje: 'Todo mejor'
     });
 });
 
